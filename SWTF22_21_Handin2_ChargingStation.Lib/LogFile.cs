@@ -9,6 +9,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
     public class LogFile : ILogFile
     {
         public List<LogEntry> Logs { get; set; }
+        private readonly string filename = "logfile.txt";
 
         public LogFile()
         {
@@ -17,7 +18,10 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
 
         public void WriteToLog(string message, DateTime timeStamp)
         {
-            Logs.Add(new LogEntry { LogMessage = message, TimeStamp = timeStamp });
+            using (var writer = File.AppendText(filename))
+            {
+                writer.WriteLine(timeStamp + ": " + message);
+            }
         }
     }
 }
