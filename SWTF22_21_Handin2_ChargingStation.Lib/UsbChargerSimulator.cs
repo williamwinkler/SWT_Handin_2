@@ -1,5 +1,4 @@
-﻿using System;
-using System.Timers;
+﻿using System.Timers;
 
 namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
@@ -43,7 +42,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
                 _ticksSinceStart++;
                 if (Connected && !_overload)
                 {
-                    double newValue = MaxCurrent - 
+                    double newValue = MaxCurrent -
                                       _ticksSinceStart * (MaxCurrent - FullyChargedCurrent) / (ChargeTimeMinutes * 60 * 1000 / CurrentTickInterval);
                     CurrentValue = Math.Max(newValue, FullyChargedCurrent);
                 }
@@ -109,7 +108,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
 
         private void OnNewCurrent()
         {
-            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
+            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() { Current = this.CurrentValue });
         }
     }
 }

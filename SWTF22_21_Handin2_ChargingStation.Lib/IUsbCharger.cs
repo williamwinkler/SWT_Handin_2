@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SWTF22_21_Handin2_ChargingStation.Lib
+﻿namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class CurrentEventArgs : EventArgs
     {
