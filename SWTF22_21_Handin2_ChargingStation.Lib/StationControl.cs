@@ -115,6 +115,5 @@
                 _logFile.WriteToLog("ERROR! Something wrong with charger", DateTime.Now);
             }
         }
-        // Her mangler de andre trigger handlere
     }
 }
