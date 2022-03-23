@@ -29,6 +29,13 @@
 
         public void OpenDoor()
         {
+            if (!Locked && Closed)
+            {
+                Closed = false;
+                Console.WriteLine("Door is now open");
+                OnDoorStateChangedEvent(this);
+            }
+
             if (Locked)
             {
                 Console.WriteLine("Door is locked. Please unlock it first"); ;
@@ -37,16 +44,16 @@
             {
                 Console.WriteLine("Door is already open"); ;
             }
-            else
-            {
-                Closed = false;
-                Console.WriteLine("Door is now open");
-                OnDoorStateChangedEvent(this);
-            }
         }
 
         public void UnlockDoor()
         {
+            if (Locked && Closed)
+            {
+                Locked = false;
+                Console.WriteLine("Door unlocked");
+            }
+
             if (!Locked)
             {
                 Console.WriteLine("Cannot unlock the door, as it is not locked");
@@ -54,11 +61,6 @@
             else if (!Closed)
             {
                 Console.WriteLine("Cannot unlock the door as it is not closed");
-            }
-            else
-            {
-                Locked = false;
-                Console.WriteLine("Door unlocked");
             }
         }
 
