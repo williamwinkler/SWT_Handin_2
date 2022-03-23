@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWTF22_21_Handin2_ChargingStation.Console", "SWTF22_21_Handin2_ChargingStation.Console\SWTF22_21_Handin2_ChargingStation.Console.csproj", "{9B8375AC-DCBA-4477-9527-10B87C3AAAAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWTF22_21_Handin2_ChargingStation.Console", "SWTF22_21_Handin2_ChargingStation.Console\SWTF22_21_Handin2_ChargingStation.Console.csproj", "{9B8375AC-DCBA-4477-9527-10B87C3AAAAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWTF22_21_Handin2_ChargingStation.Test.Unit", "SWTF22_21_Handin2_ChargingStation.Test.Unit\SWTF22_21_Handin2_ChargingStation.Test.Unit.csproj", "{3965A0A3-206B-4F76-BF25-70C9101D03E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWTF22_21_Handin2_ChargingStation.Test.Unit", "SWTF22_21_Handin2_ChargingStation.Test.Unit\SWTF22_21_Handin2_ChargingStation.Test.Unit.csproj", "{3965A0A3-206B-4F76-BF25-70C9101D03E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWTF22_21_Handin2_ChargingStation.Lib", "SWTF22_21_Handin2_ChargingStation.Lib\SWTF22_21_Handin2_ChargingStation.Lib.csproj", "{C9EA127C-9F35-4021-8D26-A4A7E07C0C8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3965A0A3-206B-4F76-BF25-70C9101D03E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3965A0A3-206B-4F76-BF25-70C9101D03E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3965A0A3-206B-4F76-BF25-70C9101D03E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9EA127C-9F35-4021-8D26-A4A7E07C0C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9EA127C-9F35-4021-8D26-A4A7E07C0C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9EA127C-9F35-4021-8D26-A4A7E07C0C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9EA127C-9F35-4021-8D26-A4A7E07C0C8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
