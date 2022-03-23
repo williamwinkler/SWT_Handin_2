@@ -37,6 +37,10 @@
             _usbCharger.Connected = false;
             _oldId = -1;
 
+            _rfid.ScanEvent += RfidDetected;
+            _door.DoorMoveEvent += DoorMoveHandler;
+            _usbCharger.CurrentValueEvent += ChargingValueChangedHandler;
+
         }
 
 
