@@ -47,19 +47,22 @@
             {
                 case ChargingStationState.Available:
                     // Check for ladeforbindelse
-                    if (_charging.IsConnected())
+                    if (_door.Closed)
                     {
-                        _door.LockDoor();
-                        _charging.StartCharging();
-                        _oldId = e.ID;
-                        _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
+                        if (_charging.IsConnected())
+                        {
+                            _door.LockDoor();
+                            _charging.StartCharging();
+                            _oldId = e.ID;
+                            _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
-                        _state = ChargingStationState.Locked;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Your phone is not connected. Try again.");
+                            _display.DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
+                            _state = ChargingStationState.Locked;
+                        }
+                        else
+                        {
+                            _display.DisplayMessage("Your phone is not connected. Try again.");
+                        }
                     }
                     break;
 
@@ -71,18 +74,24 @@
                     // Check for correct ID
                     if (e.ID == _oldId)
                     {
+                        _usbCharger.Connected = false;
                         _charging.StopCharging();
                         _door.UnlockDoor();
+                        _oldId = -1;
                         _logFile.WriteToLog("Charging station unlocked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Remove your phone and close the door.");
+                        _display.DisplayMessage("Remove your phone and close the door.");
                         _state = ChargingStationState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Wrong RFID tag");
+                        _display.DisplayMessage("Wrong RFID tag");
                     }
                     break;
+                default:
+                    _display.DisplayMessage("Phone not connected");
+                    break;
+
             }
         }
 
