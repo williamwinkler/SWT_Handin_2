@@ -40,7 +40,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
         }
 
 
-
+        // test
         public event EventHandler<ScanEventArgs> ScanEvent;
     }
     
