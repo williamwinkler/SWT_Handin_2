@@ -24,6 +24,16 @@
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
+        public StationControl(IChargeControl charging, IDoor door, IDisplay display, IUsbCharger usbCharger, IRFIDReader rfid, ILogFile logFile)
+        {
+            _charging = charging;
+            _door = door;
+            _display = display;
+            _usbCharger = usbCharger;
+            _rfid = rfid;
+            _logFile = logFile;
+        }
+
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
