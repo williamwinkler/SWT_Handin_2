@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-namespace UsbSimulator
+namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class UsbChargerSimulator : IUsbCharger
     {

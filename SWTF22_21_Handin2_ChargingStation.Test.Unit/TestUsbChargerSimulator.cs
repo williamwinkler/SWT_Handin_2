@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SWTF22_21_Handin2_ChargingStation.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace UsbSimulator.Test
+namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
 {
     [TestFixture]
     public class TestUsbChargerSimulator
