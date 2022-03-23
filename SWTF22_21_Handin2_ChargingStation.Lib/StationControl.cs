@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ladeskab.Interfaces;
 
-namespace Ladeskab
+namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class StationControl
     {

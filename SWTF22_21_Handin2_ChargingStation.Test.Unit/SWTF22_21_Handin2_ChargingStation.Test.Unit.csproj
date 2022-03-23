@@ -14,4 +14,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SWTF22_21_Handin2_ChargingStation.Lib\SWTF22_21_Handin2_ChargingStation.Lib.csproj" />
+  </ItemGroup>
+
 </Project>
