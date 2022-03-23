@@ -40,7 +40,7 @@
 
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(Object o, ScanEventArgs e)
+        private void RfidDetected(object o, ScanEventArgs e)
         {
             switch (_state)
             {

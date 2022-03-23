@@ -4,9 +4,12 @@
     {
         private readonly IUsbCharger _usbCharger;
 
+        public double ChargeCurrent { get; set; }
+
         public ChargeControl(IUsbCharger usbCharger)
         {
             _usbCharger = usbCharger;
+            _usbCharger.CurrentValueEvent += ChargingValueChangedHandler;
         }
 
         public bool IsConnected()
@@ -22,6 +25,19 @@
         public void StopCharging()
         {
             _usbCharger.StartCharge();
+        }
+
+        private void ChargingValueChangedHandler(object sender, CurrentEventArgs currentEvent)
+        {
+            ChargeCurrent = currentEvent.Current;
+            if (ChargeCurrent <= 5)
+            {
+                StopCharging();
+            }
+            else if (ChargeCurrent > 500)
+            {
+                StopCharging();
+            }
         }
     }
 }
