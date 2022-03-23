@@ -41,8 +41,15 @@ do
                 Console.WriteLine("Cant connect phone when door is closed");
             else
             {
-                usbCharger.Connected = true;
-                Console.WriteLine("Phone connected");
+                if (usbCharger.Connected)
+                {
+                    Console.WriteLine("Phone is already connected");
+                }
+                else
+                {
+                    usbCharger.Connected = true;
+                    Console.WriteLine("Phone connected");
+                }
             }
 
             break;
