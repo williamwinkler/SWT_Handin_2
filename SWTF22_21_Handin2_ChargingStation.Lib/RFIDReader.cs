@@ -4,7 +4,7 @@
     {
         public void EnterCardId(int id)
         {
-            this.cardID = id;
+            this.CardID = id;
         }
         protected virtual void OnScanEvent(ScanEventArgs eventArgs)
         {
