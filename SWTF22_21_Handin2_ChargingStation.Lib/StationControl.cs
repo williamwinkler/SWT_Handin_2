@@ -11,6 +11,7 @@
         };
 
         public ChargingStationState State { get; set; }
+        public double ChargeWatt { get; set; }
 
         // Her mangler flere member variable
         private ChargingStationState _state;
@@ -51,14 +52,14 @@
                         _door.LockDoor();
                         _charging.StartCharging();
                         _oldId = e.ID;
-                        _logFile.WriteToLog("Skab låst med RFID: " + e.ID, DateTime.Now);
+                        _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        Console.WriteLine("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
                         _state = ChargingStationState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        Console.WriteLine("Your phone is not connected. Try again.");
                     }
                     break;
 
@@ -72,19 +73,47 @@
                     {
                         _charging.StopCharging();
                         _door.UnlockDoor();
-                        _logFile.WriteToLog("Skab låst op med RFID: " + e.ID, DateTime.Now);
+                        _logFile.WriteToLog("Charging station unlocked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        Console.WriteLine("Remove your phone and close the door.");
                         _state = ChargingStationState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        Console.WriteLine("Wrong RFID tag");
                     }
                     break;
             }
         }
 
-        // Her mangler de andre trigger handlere
+        private void DoorMoveHandler(object o, IDoor door)
+        {
+            if (door.Closed)
+            {
+                _state = ChargingStationState.Available;
+                _display.DisplayMessage("Door Closed");
+                _logFile.WriteToLog("Door Closed", DateTime.Now);
+            }
+            else
+            {
+                _state |= ChargingStationState.DoorOpen;
+            }         
+        }
+
+        private void ChargingValueChangedHandler(object sender, CurrentEventArgs currentEvent)
+        {
+            ChargeWatt = currentEvent.Current;
+
+            if (ChargeWatt > 0 && ChargeWatt <=5)
+            {
+                _display.DisplayMessage("Phone charged");
+                _logFile.WriteToLog("Phone charged", DateTime.Now);
+            }
+            else if (ChargeWatt > 500)
+            {
+                _display.DisplayMessage("ERROR! Something wrong with charger");
+                _logFile.WriteToLog("ERROR! Something wrong with charger", DateTime.Now);
+            }
+        }
     }
 }
