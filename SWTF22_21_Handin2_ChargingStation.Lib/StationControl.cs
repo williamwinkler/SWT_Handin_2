@@ -11,6 +11,7 @@
         };
 
         public ChargingStationState State { get; set; }
+        public double ChargeWatt { get; set; }
 
         // Her mangler flere member variable
         private ChargingStationState _state;
@@ -97,6 +98,22 @@
             {
                 _state |= ChargingStationState.DoorOpen;
             }         
+        }
+
+        private void ChargingValueChangedHandler(object sender, CurrentEventArgs currentEvent)
+        {
+            ChargeWatt = currentEvent.Current;
+
+            if (ChargeWatt > 0 && ChargeWatt <=5)
+            {
+                _display.DisplayMessage("Phone charged");
+                _logFile.WriteToLog("Phone charged", DateTime.Now);
+            }
+            else if (ChargeWatt > 500)
+            {
+                _display.DisplayMessage("ERROR! Something wrong with charger");
+                _logFile.WriteToLog("ERROR! Something wrong with charger", DateTime.Now);
+            }
         }
         // Her mangler de andre trigger handlere
     }
