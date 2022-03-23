@@ -47,8 +47,19 @@
 
         public void UnlockDoor()
         {
-            Locked = false;
-            OnDoorStateChangedEvent(this);
+            else if (!Locked)
+            {
+                Console.WriteLine("Cannot unlock the door, as it is not locked");
+            }
+            else if (!Closed)
+            {
+                Console.WriteLine("Cannot unlock the door as it is not closed");
+            }
+            else
+            {
+                Locked = false;
+                Console.WriteLine("Door unlocked");
+            }
         }
 
         public void LockDoor()
