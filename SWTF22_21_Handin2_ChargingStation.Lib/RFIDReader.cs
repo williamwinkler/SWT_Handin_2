@@ -8,5 +8,13 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class RFIDReader
     {
+        
+    }
+    
+    public class ScanEventArgs : EventArgs
+    {
+        public int ID { get; set; };
     }
 }
+
+
