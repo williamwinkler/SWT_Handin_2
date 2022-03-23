@@ -3,7 +3,7 @@
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        private enum ChargingStationState
         {
             Available,
             Locked,
@@ -11,10 +11,15 @@
         };
 
         // Her mangler flere member variable
-        private LadeskabState _state;
+        private ChargingStationState _state;
         private IChargeControl _charging;
         private int _oldId;
         private IDoor _door;
+        private IDisplay _display;
+        private IUsbCharger _usbCharger;
+        private IRFIDReader _rfid;
+        private ILogFile _logFile;
+
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
@@ -25,7 +30,7 @@
         {
             switch (_state)
             {
-                case LadeskabState.Available:
+                case ChargingStationState.Available:
                     // Check for ladeforbindelse
                     if (_charging.IsConnected())
                     {
@@ -38,7 +43,7 @@
                         }
 
                         Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-                        _state = LadeskabState.Locked;
+                        _state = ChargingStationState.Locked;
                     }
                     else
                     {
@@ -47,11 +52,11 @@
 
                     break;
 
-                case LadeskabState.DoorOpen:
+                case ChargingStationState.DoorOpen:
                     // Ignore
                     break;
 
-                case LadeskabState.Locked:
+                case ChargingStationState.Locked:
                     // Check for correct ID
                     if (id == _oldId)
                     {
@@ -63,7 +68,7 @@
                         }
 
                         Console.WriteLine("Tag din telefon ud af skabet og luk døren");
-                        _state = LadeskabState.Available;
+                        _state = ChargingStationState.Available;
                     }
                     else
                     {
