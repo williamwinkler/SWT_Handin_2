@@ -85,6 +85,19 @@
             }
         }
 
+        private void DoorMoveHandler(object o, IDoor door)
+        {
+            if (door.Closed)
+            {
+                _state = ChargingStationState.Available;
+                _display.DisplayMessage("Door Closed");
+                _logFile.WriteToLog("Door Closed", DateTime.Now);
+            }
+            else
+            {
+                _state |= ChargingStationState.DoorOpen;
+            }         
+        }
         // Her mangler de andre trigger handlere
     }
 }
