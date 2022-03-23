@@ -3,6 +3,8 @@
 bool finish = false;
 
 IDoor door = new Door();
+IRFIDReader rfidReader = new RFIDReader();
+
 
 do
 {
@@ -30,7 +32,7 @@ do
             string idString = System.Console.ReadLine();
 
             int id = Convert.ToInt32(idString);
-            rfidReader.OnRfidRead(id);
+            rfidReader.EnterCardId(id); // updated method name
             break;
 
         default:
