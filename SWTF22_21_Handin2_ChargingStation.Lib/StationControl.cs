@@ -52,14 +52,14 @@
                         _door.LockDoor();
                         _charging.StartCharging();
                         _oldId = e.ID;
-                        _logFile.WriteToLog("Skab låst med RFID: " + e.ID, DateTime.Now);
+                        _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        Console.WriteLine("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
                         _state = ChargingStationState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        Console.WriteLine("Your phone is not connected. Try again.");
                     }
                     break;
 
@@ -73,14 +73,14 @@
                     {
                         _charging.StopCharging();
                         _door.UnlockDoor();
-                        _logFile.WriteToLog("Skab låst op med RFID: " + e.ID, DateTime.Now);
+                        _logFile.WriteToLog("Charging station unlocked with RFID: " + e.ID, DateTime.Now);
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        Console.WriteLine("Remove your phone and close the door.");
                         _state = ChargingStationState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        Console.WriteLine("Wrong RFID tag");
                     }
                     break;
             }
