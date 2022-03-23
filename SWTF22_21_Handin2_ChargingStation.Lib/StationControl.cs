@@ -36,7 +36,8 @@
             _logFile = logFile;
 
             State = ChargingStationState.Available;
-
+            _usbCharger.Connected = false;
+            _oldId = -1;
 
         }
 
