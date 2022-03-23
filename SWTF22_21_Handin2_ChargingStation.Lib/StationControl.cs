@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SWTF22_21_Handin2_ChargingStation.Lib
+﻿namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class StationControl
     {
@@ -19,7 +12,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger;
+        private IChargeControl _charging;
         private int _oldId;
         private IDoor _door;
 
@@ -34,10 +27,10 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_charging.IsConnected())
                     {
                         _door.LockDoor();
-                        _charger.StartCharge();
+                        _charging.StartCharging();
                         _oldId = id;
                         using (var writer = File.AppendText(logFile))
                         {
@@ -62,7 +55,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
                     // Check for correct ID
                     if (id == _oldId)
                     {
-                        _charger.StopCharge();
+                        _charging.StopCharging();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {
