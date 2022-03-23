@@ -7,10 +7,24 @@
         public bool Closed { get; set; }
         public bool Locked { get; set; }
 
+        public Door()
+        {
+            Locked = false;
+            Closed = true;
+        }
+
         public void CloseDoor()
         {
-            Closed = true;
-            OnDoorStateChangedEvent(this);
+            if (!Closed)
+            {
+                Closed = true;
+                Console.WriteLine("Door is now closed");
+                OnDoorStateChangedEvent(this);
+            }
+            else
+            {
+                Console.WriteLine("Door is already closed");
+            }
         }
 
         public void OpenDoor()
