@@ -15,8 +15,20 @@
 
         public void OpenDoor()
         {
-            Closed = false;
-            OnDoorStateChangedEvent(this);
+            if (Locked)
+            {
+                Console.WriteLine("Door is locked. Please unlock it first"); ;
+            }
+            else if (!Closed)
+            {
+                Console.WriteLine("Door is already open"); ;
+            }
+            else
+            {
+                Closed = false;
+                Console.WriteLine("Door is now open");
+                OnDoorStateChangedEvent(this);
+            }
         }
 
         public void UnlockDoor()
