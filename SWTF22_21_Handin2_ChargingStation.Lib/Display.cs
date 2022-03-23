@@ -2,5 +2,9 @@
 {
     public class Display : IDisplay
     {
+        public void DisplayMessage(string message)
+        {
+            Console.WriteLine($"Display: {message}");
+        }
     }
 }
