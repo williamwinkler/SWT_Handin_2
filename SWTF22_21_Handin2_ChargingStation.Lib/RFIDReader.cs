@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SWTF22_21_Handin2_ChargingStation.Lib
+﻿namespace SWTF22_21_Handin2_ChargingStation.Lib
 {
     public class RFIDReader : IRFIDReader
     {
@@ -23,19 +17,20 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
         {
             get { return cardID; }
 
-            set {
-                    if (0 <= value)
-                    {
-                        Error = false;
-                        OnScanEvent(new ScanEventArgs { ID = value });
-                        cardID = value;
-                    }
-                    else
-                    {
-                        Error = true;
-                        Console.WriteLine("CardID not positive! Please enter postive CardID");
-                    }
+            set
+            {
+                if (0 <= value)
+                {
+                    Error = false;
+                    OnScanEvent(new ScanEventArgs { ID = value });
+                    cardID = value;
                 }
+                else
+                {
+                    Error = true;
+                    Console.WriteLine("CardID not positive! Please enter postive CardID");
+                }
+            }
 
         }
 
@@ -43,7 +38,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
         // test
         public event EventHandler<ScanEventArgs> ScanEvent;
     }
-    
+
     public class ScanEventArgs : EventArgs
     {
         public int ID { get; set; }
