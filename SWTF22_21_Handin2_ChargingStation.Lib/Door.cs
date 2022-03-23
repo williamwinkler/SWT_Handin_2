@@ -47,7 +47,7 @@
 
         public void UnlockDoor()
         {
-            else if (!Locked)
+            if (!Locked)
             {
                 Console.WriteLine("Cannot unlock the door, as it is not locked");
             }
