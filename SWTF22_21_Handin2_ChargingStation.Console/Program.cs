@@ -1,4 +1,9 @@
-﻿bool finish = false;
+﻿using SWTF22_21_Handin2_ChargingStation.Lib;
+
+bool finish = false;
+
+IDoor door = new Door();
+
 do
 {
     string input;
@@ -13,11 +18,11 @@ do
             break;
 
         case 'O':
-            door.OnDoorOpen();
+            door.OpenDoor();
             break;
 
         case 'C':
-            door.OnDoorClose();
+            door.CloseDoor();
             break;
 
         case 'R':
