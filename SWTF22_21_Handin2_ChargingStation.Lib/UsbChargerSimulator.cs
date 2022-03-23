@@ -15,7 +15,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Lib
 
         public double CurrentValue { get; private set; }
 
-        public bool Connected { get; private set; }
+        public bool Connected { get; set; }
 
         private bool _overload;
         private bool _charging;
