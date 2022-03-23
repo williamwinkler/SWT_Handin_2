@@ -2,14 +2,27 @@
 {
     public class Door : IDoor
     {
+        public bool Closed { get; set; }
+        public bool Locked { get; set; }
+
         public void CloseDoor()
         {
-            throw new NotImplementedException();
+            Closed = true;
         }
 
         public void OpenDoor()
         {
-            throw new NotImplementedException();
+            Closed = false;
+        }
+
+        public void UnlockDoor()
+        {
+            Locked = false;
+        }
+
+        public void LockDoor()
+        {
+            Locked = true;
         }
     }
 }

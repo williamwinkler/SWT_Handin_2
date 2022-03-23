@@ -5,5 +5,7 @@
         public void OpenDoor();
 
         public void CloseDoor();
+        public void UnlockDoor();
+        public void LockDoor();
     }
 }
