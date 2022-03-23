@@ -3,12 +3,14 @@
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum ChargingStationState
+        public enum ChargingStationState
         {
             Available,
             Locked,
             DoorOpen
         };
+
+        public ChargingStationState State { get; set; }
 
         // Her mangler flere member variable
         private ChargingStationState _state;
@@ -32,6 +34,10 @@
             _usbCharger = usbCharger;
             _rfid = rfid;
             _logFile = logFile;
+
+            State = ChargingStationState.Available;
+
+
         }
 
 
