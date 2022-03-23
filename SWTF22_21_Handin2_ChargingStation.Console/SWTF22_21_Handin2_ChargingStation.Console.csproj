@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SWTF22_21_Handin2_ChargingStation.Lib\SWTF22_21_Handin2_ChargingStation.Lib.csproj" />
-  </ItemGroup>
-
 </Project>
