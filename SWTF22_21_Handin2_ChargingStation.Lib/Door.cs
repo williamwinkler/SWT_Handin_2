@@ -35,8 +35,7 @@
                 Console.WriteLine("Door is now open");
                 OnDoorStateChangedEvent(this);
             }
-
-            if (Locked)
+            else if (Locked)
             {
                 Console.WriteLine("Door is locked. Please unlock it first"); ;
             }
@@ -53,8 +52,7 @@
                 Locked = false;
                 Console.WriteLine("Door unlocked");
             }
-
-            if (!Locked)
+            else if (!Locked)
             {
                 Console.WriteLine("Cannot unlock the door, as it is not locked");
             }
