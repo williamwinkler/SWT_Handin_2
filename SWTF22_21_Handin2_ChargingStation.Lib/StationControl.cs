@@ -81,6 +81,7 @@
                         _usbCharger.Connected = false;
                         _charging.StopCharging();
                         _door.UnlockDoor();
+                        _door.OpenDoor();
                         _oldId = -1;
                         _logFile.WriteToLog("Charging station unlocked with RFID: " + e.ID, DateTime.Now);
 
