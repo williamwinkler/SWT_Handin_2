@@ -53,8 +53,19 @@
 
         public void LockDoor()
         {
-            Locked = true;
-            OnDoorStateChangedEvent(this);
+            if (Locked)
+            {
+                Console.WriteLine("Door is already locked");
+            }
+            else if (!Closed)
+            {
+                Console.WriteLine("Door is not closed. Please close it before trying to lock it");
+            }
+            else
+            {
+                Locked = true;
+                Console.WriteLine("Door Locked");
+            }
         }
 
         private void OnDoorStateChangedEvent(Door e)
