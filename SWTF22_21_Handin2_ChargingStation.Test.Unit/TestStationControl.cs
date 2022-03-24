@@ -1,6 +1,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using SWTF22_21_Handin2_ChargingStation.Lib;
+using System;
 
 namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
 {
@@ -28,6 +29,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _uut = new StationControl(_chargecontrol, _door, _display, _usbCharger, _rfid, _logfile);
         }
 
+        //Rfid handler tests
         [TestCase(123)]
         [TestCase(1234)]
         public void RfidDetected_stateAvailable_OldIdIsSet(int id)
@@ -48,12 +50,11 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _usbCharger.Connected = true;
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
-            _display.Received(1).DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
+            _display.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
 
         [TestCase(123)]
-        [TestCase(1234)]
         public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(int id)
         {
             _uut.State = StationControl.ChargingStationState.Locked;
@@ -76,6 +77,15 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             Assert.That(_uut.State, Is.EqualTo(StationControl.ChargingStationState.Locked));
         }
 
-        
+
+
+        //Door handler tests
+        [Test]
+        public void DoorClosed_Message_CorrectMessage()
+        {
+            _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
+            _display.Received(1).DisplayMessage("Door Closed");
+            _logfile.Received(1).WriteToLog("Door Closed", Arg.Any<DateTime>());
+        }
     }
 }
