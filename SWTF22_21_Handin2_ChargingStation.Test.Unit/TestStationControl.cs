@@ -77,6 +77,17 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             Assert.That(_uut.State, Is.EqualTo(StationControl.ChargingStationState.Locked));
         }
 
+        [TestCase(50)]
+        public void RfidDetected_stateLocked_CardIdMatch_DisplayCorrectMessage(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Locked;
+            _uut.OldId = id;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _display.Received(1).DisplayMessage("Remove your phone and close the door.");
+        }
+
 
 
         //Door handler tests
