@@ -62,12 +62,12 @@
 
                         if (_charging.IsConnected())
                         {
+                            _state = ChargingStationState.Locked;
                             _door.LockDoor();
                             _charging.StartCharging();
                             _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
                             _display.DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
-                            _state = ChargingStationState.Locked;
                         }
                         else
                         {
