@@ -48,7 +48,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _usbCharger.Connected = true;
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
-            _display.Received(1).DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
+            _display.Received(1).DisplayMessage(Arg.Any<string>());
         }
 
 
