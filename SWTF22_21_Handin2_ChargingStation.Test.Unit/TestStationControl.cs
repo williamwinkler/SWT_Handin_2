@@ -88,7 +88,26 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _display.Received(1).DisplayMessage("Remove your phone and close the door.");
         }
 
+        [TestCase(50)]
+        public void RfidDetected_stateLocked_CardIdMatch_WriteToLogIsCalled(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Locked;
+            _uut.OldId = id;
 
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _logfile.WriteToLog(Arg.Any<string>(), Arg.Any<DateTime>());
+        }
+
+        [TestCase(50)]
+        public void RfidDetected_stateLocked_CardIdNoMatch_DisplayCorrectMessage(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Locked;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _display.Received(1).DisplayMessage("Wrong RFID tag");
+        }
 
         //Door handler tests
         [Test]
