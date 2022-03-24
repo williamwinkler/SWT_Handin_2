@@ -28,23 +28,25 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _uut = new StationControl(_chargecontrol, _door, _display, _usbccharge, _rfid, _logfile);
         }
 
-        [Test]
-        public void RfidDetected_stateAvailable_OldIdIsSet(object o, ScanEventArgs e)
+        [TestCase(123)]
+        [TestCase(1234)]
+        public void RfidDetected_stateAvailable_OldIdIsSet(int id)
         {
             _uut.State = StationControl.ChargingStationState.Available;
             _door.Closed = true;
-            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = e.ID });
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
-            Assert.That(_uut.OldId, Is.EqualTo(e.ID));
+            Assert.That(_uut.OldId, Is.EqualTo(id));
         }
 
-        [Test]
-        public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(object o, ScanEventArgs e)
+        [TestCase(123)]
+        [TestCase(1234)]
+        public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(int id)
         {
             _uut.State = StationControl.ChargingStationState.Locked;
-            _uut.OldId = e.ID;
+            _uut.OldId = id;
 
-            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = e.ID });
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
             _door.Received(1).UnlockDoor();
         }
