@@ -10,7 +10,12 @@
             DoorOpen
         };
 
-        public ChargingStationState State { get; set; }
+        public ChargingStationState State
+        {
+            get { return _state; }
+            set { _state = value; }
+        }
+
         public double ChargeWatt { get; set; }
         public int OldId 
         {
@@ -38,7 +43,7 @@
             _rfid = rfid;
             _logFile = logFile;
 
-            State = ChargingStationState.Available;
+            _state = ChargingStationState.Available;
             _usbCharger.Connected = false;
             _oldId = -1;
 
@@ -60,14 +65,14 @@
                     {
                         _oldId = e.ID;
 
-                        if (_charging.IsConnected())
+                        if (_usbCharger.Connected)
                         {
+                            _state = ChargingStationState.Locked;
                             _door.LockDoor();
                             _charging.StartCharging();
                             _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
                             _display.DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
-                            _state = ChargingStationState.Locked;
                         }
                         else
                         {
@@ -116,7 +121,7 @@
             }
             else
             {
-                _state |= ChargingStationState.DoorOpen;
+                _state = ChargingStationState.DoorOpen;
             }         
         }
 

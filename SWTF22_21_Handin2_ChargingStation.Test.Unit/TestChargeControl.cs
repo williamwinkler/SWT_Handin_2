@@ -55,8 +55,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         [TestCase(505)]
         [TestCase(10000000)]
         [TestCase(1000)]
-        [TestCase(-1)]
-        [TestCase(0)]
+        [TestCase(0.1)]
         [TestCase(0.00001)]
         [TestCase(4.9)]
         public void ChargeChanged_OutsideLimits_StopCharge(double current)
