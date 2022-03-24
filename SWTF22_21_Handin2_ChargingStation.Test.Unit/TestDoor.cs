@@ -115,8 +115,9 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         }
 
         [Test]
-        public void LockDoor_DoorIsNotClosed_DoorIsStillLocked()
+        public void LockDoor_DoorIsNotClosed_DoorIsNotLocked()
         {
+            _door.UnlockDoor();
             _door.OpenDoor();
             _door.LockDoor();
             Assert.IsFalse(_door.Locked);
