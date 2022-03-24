@@ -109,6 +109,15 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _display.Received(1).DisplayMessage("Wrong RFID tag");
         }
 
+        [TestCase(50)]
+        public void RfidDetected_stateWrong_default(int id)
+        {
+            _uut.State = (StationControl.ChargingStationState)200;
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+            _display.Received(1).DisplayMessage("Phone not connected");
+
+        }
+
         //Door handler tests
         [Test]
         public void DoorClosed_Message_CorrectMessage()
