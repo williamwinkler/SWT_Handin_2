@@ -87,5 +87,16 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _display.Received(1).DisplayMessage("Door Closed");
             _logfile.Received(1).WriteToLog("Door Closed", Arg.Any<DateTime>());
         }
+
+
+        [Test]
+        public void OpenDoor_InAvailableState_StateChangedToOpened()
+        {
+            _door.Closed = false;
+
+            _door.DoorMoveEvent += Raise.EventWith(this, new Door() { Closed = false });
+
+            Assert.That(_uut.State, Is.EqualTo(StationControl.ChargingStationState.DoorOpen));
+        }
     }
 }

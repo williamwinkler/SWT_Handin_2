@@ -116,7 +116,7 @@
             }
             else
             {
-                _state |= ChargingStationState.DoorOpen;
+                _state = ChargingStationState.DoorOpen;
             }         
         }
 
