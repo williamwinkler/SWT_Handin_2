@@ -24,7 +24,7 @@
 
         public void StopCharging()
         {
-            _usbCharger.StartCharge();
+            _usbCharger.StopCharge();
         }
 
         private void ChargingValueChangedHandler(object sender, CurrentEventArgs currentEvent)
