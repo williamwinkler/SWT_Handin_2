@@ -29,7 +29,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _uut = new StationControl(_chargecontrol, _door, _display, _usbCharger, _rfid, _logfile);
         }
 
-        //Rfid handler tests
+        //Rfid handler tests: state Available
         [TestCase(123)]
         [TestCase(1234)]
         public void RfidDetected_stateAvailable_OldIdIsSet(int id)
@@ -50,19 +50,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _usbCharger.Connected = true;
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
-            _display.Received(1).DisplayMessage(Arg.Any<string>());
-        }
-
-
-        [TestCase(123)]
-        public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(int id)
-        {
-            _uut.State = StationControl.ChargingStationState.Locked;
-            _uut.OldId = id;
-
-            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
-
-            _door.Received(1).UnlockDoor();
+            _display.Received(1).DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
         }
 
         [TestCase(123)]
@@ -75,6 +63,30 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
             Assert.That(_uut.State, Is.EqualTo(StationControl.ChargingStationState.Locked));
+        }
+
+        [TestCase(123)]
+        public void RfidDetected_stateAvailable_LockDoorIsCalled(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Available;
+            _door.Closed = true;
+            _usbCharger.Connected = true;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _door.Received(1).LockDoor();
+        }
+
+        //Rfid handler tests: state Locked
+        [TestCase(123)]
+        public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Locked;
+            _uut.OldId = id;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _door.Received(1).UnlockDoor();
         }
 
         [TestCase(50)]
@@ -109,6 +121,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _display.Received(1).DisplayMessage("Wrong RFID tag");
         }
 
+        //Rfid handler tests: state Wrong
         [TestCase(50)]
         public void RfidDetected_stateWrong_default(int id)
         {
