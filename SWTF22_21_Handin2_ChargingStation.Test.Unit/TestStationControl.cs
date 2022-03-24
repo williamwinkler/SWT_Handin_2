@@ -175,5 +175,20 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
 
             Assert.That(_uut.State, Is.EqualTo(StationControl.ChargingStationState.DoorOpen));
         }
+
+        //Charge handler tests
+        [Test]
+        public void ChargeChanged_CurrentUnderFiveShowMessage_DisplayAndLogCalledWithCorrectMessage()
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2 });
+            _display.Received(1).DisplayMessage("Phone charged");
+        }
+
+        [Test]
+        public void ChargeChanged_CurrentUnderFiveShowMessage_WriteLog()
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2 });
+            _logfile.Received(1).WriteToLog("Phone charged", Arg.Any<DateTime>());
+        }
     }
 }
