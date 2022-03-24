@@ -190,5 +190,18 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2 });
             _logfile.Received(1).WriteToLog("Phone charged", Arg.Any<DateTime>());
         }
+
+        [Test]
+        public void ChargeChanged_CurrentOverFiveHundredShowMessage_ShowMessage()
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 502 });
+            _display.Received(1).DisplayMessage("ERROR! Something wrong with charger");
+        }
+        [Test]
+        public void ChargeChanged_CurrentOverFiveHundredShowMessage_WriteLog()
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 502 });
+            _logfile.Received(1).WriteToLog("ERROR! Something wrong with charger", Arg.Any<DateTime>());
+        }
     }
 }
