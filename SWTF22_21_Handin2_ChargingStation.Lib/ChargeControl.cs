@@ -30,7 +30,7 @@
         private void ChargingValueChangedHandler(object sender, CurrentEventArgs currentEvent)
         {
             ChargeCurrent = currentEvent.Current;
-            if (ChargeCurrent <= 5)
+            if (ChargeCurrent <= 5 && ChargeCurrent > 0)
             {
                 StopCharging();
             }
