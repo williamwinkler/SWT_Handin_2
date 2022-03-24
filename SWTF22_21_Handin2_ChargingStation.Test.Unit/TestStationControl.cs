@@ -37,5 +37,16 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
 
             Assert.That(_uut.OldId, Is.EqualTo(e.ID));
         }
+
+        [Test]
+        public void RfidDetected_stateLocked_CardIdMatch_UnlockDoorCalled(object o, ScanEventArgs e)
+        {
+            _uut.State = StationControl.ChargingStationState.Locked;
+            _uut.OldId = e.ID;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = e.ID });
+
+            _door.Received(1).UnlockDoor();
+        }
     }
 }
