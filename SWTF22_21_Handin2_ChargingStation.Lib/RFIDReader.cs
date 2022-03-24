@@ -12,10 +12,8 @@
         }
 
         private int cardID;
-        private bool error;
-        public bool Error { 
-            get { return error; }
-            set { error = value; } }
+      
+        public bool Error { get; set; }
         public int CardID
         {
             get { return cardID; }
