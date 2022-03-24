@@ -12,11 +12,11 @@
 
         public ChargingStationState State { get; set; }
         public double ChargeWatt { get; set; }
+        public int OldId { get; set; }
 
         // Her mangler flere member variable
         private ChargingStationState _state;
         private IChargeControl _charging;
-        private int _oldId;
         private IDoor _door;
         private IDisplay _display;
         private IUsbCharger _usbCharger;
@@ -35,7 +35,7 @@
 
             State = ChargingStationState.Available;
             _usbCharger.Connected = false;
-            _oldId = -1;
+            OldId = -1;
 
             _rfid.ScanEvent += RfidDetected;
             _door.DoorMoveEvent += DoorMoveHandler;
@@ -57,7 +57,7 @@
                         {
                             _door.LockDoor();
                             _charging.StartCharging();
-                            _oldId = e.ID;
+                            OldId = e.ID;
                             _logFile.WriteToLog("Charging station locked with RFID: " + e.ID, DateTime.Now);
 
                             _display.DisplayMessage("Charging station is locked and your phone is charging. Use your RFID tag to unlock.");
@@ -76,13 +76,13 @@
 
                 case ChargingStationState.Locked:
                     // Check for correct ID
-                    if (e.ID == _oldId)
+                    if (e.ID == OldId)
                     {
                         _usbCharger.Connected = false;
                         _charging.StopCharging();
                         _door.UnlockDoor();
                         _door.OpenDoor();
-                        _oldId = -1;
+                        OldId = -1;
                         _logFile.WriteToLog("Charging station unlocked with RFID: " + e.ID, DateTime.Now);
 
                         _display.DisplayMessage("Remove your phone and close the door.");
