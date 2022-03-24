@@ -8,5 +8,9 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
 {
     public class TestDisplay
     {
+        public TestDisplay()
+        {
+             
+        }
     }
 }
