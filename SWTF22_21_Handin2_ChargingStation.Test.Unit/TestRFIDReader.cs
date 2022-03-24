@@ -55,5 +55,26 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             Assert.IsTrue(_uut.Error);
         }
 
+        [TestCase(0)]
+        [TestCase(2)]
+        [TestCase(99)]
+        [TestCase(1342598)]
+        public void EnterCardId_enterId_IdChanged(int id)
+        {
+            _uut.EnterCardId(id);
+
+            Assert.That(_uut.CardID, Is.EqualTo(id));
+        }
+
+        [TestCase(-1)]
+        [TestCase(-10)]
+        public void EnterCardId_enterNegativeId_IdChanged(int id)
+        {
+            _uut.EnterCardId(69);
+            _uut.EnterCardId(id);
+
+            Assert.That(_uut.CardID, Is.EqualTo(69));
+        }
+
     }
 }
