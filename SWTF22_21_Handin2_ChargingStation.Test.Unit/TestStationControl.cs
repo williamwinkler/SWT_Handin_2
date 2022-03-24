@@ -1,4 +1,5 @@
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 using SWTF22_21_Handin2_ChargingStation.Lib;
 using System;
@@ -75,6 +76,30 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
 
             _door.Received(1).LockDoor();
+        }
+
+        [TestCase(123)]
+        public void RfidDetected_stateAvailable_WriteToLogDoorIsCalled(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Available;
+            _door.Closed = true;
+            _usbCharger.Connected = true;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _logfile.Received(1).WriteToLog("Charging station locked with RFID: " + id, Arg.Any<DateTime>());
+        }
+
+        [TestCase(123)]
+        public void RfidDetected_stateAvailable_StartChargingIsCalled(int id)
+        {
+            _uut.State = StationControl.ChargingStationState.Available;
+            _door.Closed = true;
+            _usbCharger.Connected = true;
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = id });
+
+            _chargecontrol.Received(1).StartCharging();
         }
 
         //Rfid handler tests: state Locked
