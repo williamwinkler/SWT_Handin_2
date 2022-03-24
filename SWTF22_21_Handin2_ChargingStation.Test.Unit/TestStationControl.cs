@@ -29,6 +29,13 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         }
 
         [Test]
+        public void RfidDetected_stateAvailable_OldIdIsSet(object o, ScanEventArgs e)
+        {
+            _uut.State = StationControl.ChargingStationState.Available;
+            _door.Closed = true;
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = e.ID });
 
+            Assert.That(_uut.OldId, Is.EqualTo(e.ID));
+        }
     }
 }
