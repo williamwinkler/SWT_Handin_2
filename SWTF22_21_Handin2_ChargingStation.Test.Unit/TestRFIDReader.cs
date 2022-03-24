@@ -23,8 +23,37 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _uut.ScanEvent += (o, args) => { _receivedScanEventArgs = args; };
         }
 
+        [Test]
+        public void SetCardID_newIdAdded_EventContainsCorrectId()
+        {
+            _uut.CardID = 69; // B-)
 
-        
+            Assert.That(_receivedScanEventArgs.ID, Is.EqualTo(69));
+        }
+
+        [Test]
+        public void CardIDPropertySetGet_ValueIsSet()
+        {
+            _uut.CardID = 69; // B-)
+
+            Assert.That(_uut.CardID, Is.EqualTo(69));
+        }
+
+        [Test]
+        public void SetCardID_newIdAdded_EventTriggeredAndNotNull()
+        {
+            _uut.CardID = 69; // B-)
+
+            Assert.That(_receivedScanEventArgs.ID, Is.Not.Null);
+        }
+
+        [Test]
+        public void CardIDPropertySetToNegativeValue_idErrorCalled()
+        {
+            _uut.CardID = -69; // :(
+
+            Assert.IsTrue(_uut.Error);
+        }
 
     }
 }
