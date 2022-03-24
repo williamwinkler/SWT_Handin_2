@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 using SWTF22_21_Handin2_ChargingStation.Lib;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,20 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             _door.Locked = false;
             _door.CloseDoor();
             Assert.IsFalse(_door.Locked);
+        }
+
+        [Test]
+        public void DoorClosed_OpenDoor_DoorOpenEvent()
+        {
+            IDoor idoor = Substitute.For<IDoor>();
+            _door.DoorMoveEvent +=
+                (o, args) =>
+                {
+                    idoor = args;
+                };
+
+            _door.OpenDoor();
+            Assert.IsFalse(_door.Closed);
         }
     }
 }
