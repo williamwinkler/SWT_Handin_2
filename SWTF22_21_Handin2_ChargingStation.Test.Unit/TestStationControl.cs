@@ -33,6 +33,7 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         //Rfid handler tests: state Available
         [TestCase(123)]
         [TestCase(1234)]
+        [TestCase(-1)]
         public void RfidDetected_stateAvailable_OldIdIsSet(int id)
         {
             _uut.State = StationControl.ChargingStationState.Available;
@@ -177,30 +178,32 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         }
 
         //Charge handler tests
-        [Test]
-        public void ChargeChanged_CurrentUnderFiveShowMessage_DisplayAndLogCalledWithCorrectMessage()
+        [TestCase(2)]
+        public void ChargeChanged_CurrentUnderFiveShowMessage_DisplayAndLogCalledWithCorrectMessage(int cur)
         {
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2 });
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = cur });
             _display.Received(1).DisplayMessage("Phone charged");
         }
 
-        [Test]
-        public void ChargeChanged_CurrentUnderFiveShowMessage_WriteLog()
+        [TestCase(2)]
+        public void ChargeChanged_CurrentUnderFiveShowMessage_WriteLog(int cur)
         {
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 2 });
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = cur });
             _logfile.Received(1).WriteToLog("Phone charged", Arg.Any<DateTime>());
         }
 
-        [Test]
-        public void ChargeChanged_CurrentOverFiveHundredShowMessage_ShowMessage()
+        [TestCase(502)]
+        [TestCase(-2)]
+        public void ChargeChanged_CurrentOverFiveHundredShowMessage_ShowMessage(int cur)
         {
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 502 });
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = cur });
             _display.Received(1).DisplayMessage("ERROR! Something wrong with charger");
         }
-        [Test]
-        public void ChargeChanged_CurrentOverFiveHundredShowMessage_WriteLog()
+        [TestCase(502)]
+        [TestCase(-2)]
+        public void ChargeChanged_CurrentOverFiveHundredShowMessage_WriteLog(int cur)
         {
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 502 });
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = cur });
             _logfile.Received(1).WriteToLog("ERROR! Something wrong with charger", Arg.Any<DateTime>());
         }
     }

@@ -139,6 +139,11 @@
                 _display.DisplayMessage("ERROR! Something wrong with charger");
                 _logFile.WriteToLog("ERROR! Something wrong with charger", DateTime.Now);
             }
+            else if(ChargeWatt < 0)
+            {
+                _display.DisplayMessage("ERROR! Something wrong with charger");
+                _logFile.WriteToLog("ERROR! Something wrong with charger", DateTime.Now);
+            }
         }
     }
 }
