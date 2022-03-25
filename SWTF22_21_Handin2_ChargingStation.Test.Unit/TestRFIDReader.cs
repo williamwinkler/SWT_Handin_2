@@ -77,15 +77,5 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
             Assert.That(_uut.CardID, Is.EqualTo(69));
         }
 
-        [TestCase(516)]
-        [TestCase(1)]
-        public void ScanEventArgs_setId_IdSetCorrect(int id)
-        {
-            _uut.CardID = id;
-            
-
-            Assert.That(_receivedScanEventArgs.ID, Is.EqualTo(id));
-        }
-
     }
 }
