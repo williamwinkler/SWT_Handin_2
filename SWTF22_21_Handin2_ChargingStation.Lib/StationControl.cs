@@ -17,7 +17,7 @@
         }
 
         public double ChargeWatt { get; set; }
-        public int OldId 
+        private int OldId 
         {
             get { return _oldId; }
             set { _oldId = value; }

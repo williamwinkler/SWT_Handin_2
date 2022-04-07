@@ -66,15 +66,73 @@ namespace SWTF22_21_Handin2_ChargingStation.Test.Unit
         }
 
         [Test]
-        public void StationControl_DoorClosedAndCharging_IsCharging()
+        public void StationControl_DoorClosedAndCharging_LockDoorReceived()
         {
-            _usbCharger.Connected = true;
-            
+            _usbCharger.Connected.Returns(true);
+            _door.Closed.Returns(true);
             _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
 
             _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
 
             _door.Received(1).LockDoor();            
+        }
+
+        [Test]
+        public void StationControl_DoorClosedAndRFIDEntered_StartCharging()
+        {
+            _usbCharger.Connected.Returns(true);
+            _door.Closed.Returns(true);
+            _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
+
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+
+            _chargecontrol.Received(1).StartCharging();
+        }
+
+        [Test]
+        public void StationControl_ChargingFinished_StopCharging()
+        {
+            _usbCharger.Connected.Returns(true);
+            _door.Closed.Returns(true);
+            _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
+            
+            // strat charging
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+            
+            // Enter code to open door thus stopping to charge
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+
+            _chargecontrol.Received(1).StopCharging();
+        }
+
+        [Test]
+        public void StationControl_RFIDEntered_DoorUnlocked()
+        {
+            _usbCharger.Connected.Returns(true);
+            _door.Closed.Returns(true);
+            _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
+
+            // strat charging
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+
+            // Enters code to open door
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+
+            _door.Received(1).UnlockDoor();
+        }
+
+        [Test]
+        public void StationControl_ChargeWattChange_MessageToDisplay()
+        {
+            _usbCharger.Connected.Returns(true);
+            _door.Closed.Returns(true);
+            _door.DoorMoveEvent += Raise.EventWith(new Door { Closed = true });
+
+            // strat charging
+            _rfid.ScanEvent += Raise.EventWith(new ScanEventArgs { ID = 123 });
+
+            // door closed displayMessage + charging message = 2
+            _display.Received(2).DisplayMessage(Arg.Any<string>());
         }
 
         ////Rfid handler tests: state Available
