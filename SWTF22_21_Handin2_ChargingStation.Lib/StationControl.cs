@@ -10,14 +10,14 @@
             DoorOpen
         };
 
-        private ChargingStationState State
+        public ChargingStationState State
         {
             get { return _state; }
             set { _state = value; }
         }
 
         public double ChargeWatt { get; set; }
-        private int OldId 
+        public int OldId 
         {
             get { return _oldId; }
             set { _oldId = value; }
