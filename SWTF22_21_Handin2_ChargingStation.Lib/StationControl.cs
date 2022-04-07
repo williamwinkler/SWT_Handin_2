@@ -10,7 +10,7 @@
             DoorOpen
         };
 
-        public ChargingStationState State
+        private ChargingStationState State
         {
             get { return _state; }
             set { _state = value; }
